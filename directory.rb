@@ -1,50 +1,60 @@
+@students = []
+
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+  name = gets.chomp
+  while !name.empty? do
+    @students << {name: name, cohort: :november}
+    puts "Now we have #{students.count} students"
+    name = gets.chomp
+  end
+end
+
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
 
-def printnames(names)
-  names.each { |student| puts "#{student[:name]} (#{student[:cohort]} cohort)" }
+def print_students_list
+  @students.each { |student| puts "#{student[:name]} (#{student[:cohort]} cohort)" }
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{@students.count} great students"
 end
 
-def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-  students = []
-  name = gets.chomp
-  while !name.empty? do
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
-    name = gets.chomp
-  end
-  return students
-end
+
 
 def interactive_menu
-  students = []
   loop do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
+    print_menu
+    process(gets.chomp)
+  end
+end
 
-    selection = gets.chomp
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
 
-    case selection
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def process(selection)
+  case selection
     when "1"
-      students = input_students
+      input_students
     when "2"
-      print_header
-      printnames(students)
-      print_footer(students)
+      show_students
     when "9"
       exit
     else
       puts "I don't know what you meant, try again"
-    end
   end
 end
 
